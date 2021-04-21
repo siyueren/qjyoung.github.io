@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script type="text/javascript" src="http://pic.qjyoung.top/js/data_2.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    option = null;
+    var data = [];
+    for (var t = 0; t < track_data.altitude.length; t++) {
+        var x = track_data.latlng[t][1];
+        var y = track_data.latlng[t][0];
+        var z = track_data.altitude[t];
+        data.push([x, y, z]);
+    }
+    
+    option = {
+        tooltip: {
+            formatter: function (params) {
+                if (params.value.length > 1) {
+                    return "海拔：" + params.value[2] + "m<br/>东经：" + params.value[0] + '<br/>北纬：' + params.value[1];
+                }
+                else {
+                    return params.name + ' : ' + params.value;
+                }
+            }
+        },
+        backgroundColor: '#fff',
+        visualMap: {
+            show: false,
+            dimension: 2,
+            min: 0,
+            max: 6000,
+            inRange: {
+                color: ['#313695', '#4575b4', '#74add1', '#fdae61', '#f46d43', '#d73027', '#a50026', '#ff0000']
+            }
+        },
+        xAxis3D: {
+            type: 'value', scale: true, name: '东经'
+        },
+        yAxis3D: {
+            type: 'value', scale: true, name: '北纬'
+        },
+        zAxis3D: {
+            type: 'value', scale: true, name: '海拔'
+        },
+        grid3D: {
+            viewControl: {
+                projection: 'orthographic'
+            }
+        },
+        series: [{
+            type: 'line3D',
+            data: data,
+            lineStyle: {
+                width: 4
+            }
+        }]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+</body>
+
+</html>

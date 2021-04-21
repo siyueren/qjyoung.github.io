@@ -1,0 +1,41 @@
+
+@font-face {font-family: "iconfont";
+  src: url('//at.alicdn.com/t/font_u4rdoyi4d8s8xgvi.eot?t=1481888109676'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_u4rdoyi4d8s8xgvi.eot?t=1481888109676#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('font_u4rdoyi4d8s8xgvi.woff?t=1481888109676') format('woff'), /* chrome, firefox */
+  url('//at.alicdn.com/t/font_u4rdoyi4d8s8xgvi.ttf?t=1481888109676') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_u4rdoyi4d8s8xgvi.svg?t=1481888109676#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-twitter:before { content: "\e634"; }
+
+.icon-qq:before { content: "\e61f"; }
+
+.icon-weibo:before { content: "\e620"; }
+
+.icon-wechat:before { content: "\e60b"; }
+
+.icon-qzone:before { content: "\e616"; }
+
+.icon-speed:before { content: "\e604"; }
+
+.icon-heartrate:before { content: "\e605"; }
+
+.icon-cadence:before { content: "\e606"; }
+
+.icon-share:before { content: "\e607"; }
+
+.icon-pause:before { content: "\e608"; }
+
+.icon-play:before { content: "\e609"; }
+
+.icon-download:before { content: "\e60a"; }
+

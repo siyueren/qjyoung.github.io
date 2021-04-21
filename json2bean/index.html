@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta name="keywords" content="JSON字符串转Java实体类,JSON字符串转JavaBean,json转JavaBean,json生成JavaBean文件,json生成entity"/>
+    <meta name="description" content="在线JSON字符串转Java实体类(JavaBean)">
+    <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+    <link href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="//cdn.bootcss.com/layer/3.0.1/skin/default/layer.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/global.css"/>
+    <script src="static/bejson/common/global.js?20180125"></script>
+    <script src="//cdn.bootcss.com/clipboard.js/1.7.1/clipboard.min.js"></script>
+</head>
+<body style="margin-top: 25px">
+<div class="aw-container-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class=" aw-main-content" style="min-height:700px;max-height:2000px">
+                    <div style="clear:both"></div>
+                    <!-- content st -->
+                    <link rel="stylesheet" type="text/css" href="static/css/java2pojo.css"/>
+                    <script type="text/javascript">
+                        function download_zip() {
+                            var package_name = $('#package_name').val();
+                            var zip = new JSZip();
+                            var code = zip.folder(package_name.replace(/\./g, "/"));
+
+                            $('.result').each(function () {
+                                code.file($(this).attr('class_name') + '.java', $(this).val());
+                            });
+
+                            var content = zip.generate({type: "blob"});
+                            // see FileSaver.js
+                            saveAs(content, "gen_beans.zip");
+                        }
+
+                        function gen() {
+                            try {
+                                $("#genDiv").html("");
+                                $("#result-list .result_row").remove();
+                                $('#resule_text').text('');
+
+                                var class_name = $('#class_name').val();
+                                var package_name = $('#package_name').val();
+                                var author = $('#author').val();
+                                //获取要解析的文本及文本类型
+                                var text = $('#json_content').val();
+                                if (text) {
+                                    var beans = getBeanFieldFromJson(text, class_name);
+                                    //把本程序定义的数据格式转换为文本
+                                    $.each(beans, function (i, v) {
+                                        var beanText = toBeanText(v, package_name, author);
+                                        console.log(beanText)
+                                        var textCss = "";
+                                        if (i != 0) {
+                                            textCss = "small-text";
+                                        }
+                                        beanText = beanText.replace("<int>", "<Integer>").replace("<long>", "<Long>");
+                                        var html = '<textarea class_name="' + v.name + '" class="result ' + textCss + '" onmouseover="this.focus();this.select()">' + beanText + '</textarea>';
+                                        $("#genDiv").append(html);
+
+                                    })
+                                    $('#resule_text').html('<span class="green">Success!</span>');
+                                    $('#download_btn').show();
+                                }
+                            } catch (err) {
+                                var tip = "";
+                                if (err.message.indexOf("Parse error on line") != -1) {
+                                    tip = err.message;
+                                } else {
+                                    tip = "parse error,makesure the json is right";
+                                }
+                                $('#resule_text').html('<span class="red">' + tip + '</span>');
+                                $('#download_btn').hide();
+                            }
+                        }
+
+                        var default_json =
+                            "{\n" +
+                            "    \"animals\": {\n" +
+                            "        \"dog\": [\n" +
+                            "            {\n" +
+                            "                \"name\": \"Rufus\", \n" +
+                            "                \"breed\": \"labrador\", \n" +
+                            "                \"count\": 1, \n" +
+                            "                \"twoFeet\": false\n" +
+                            "            }, \n" +
+                            "            {\n" +
+                            "                \"name\": \"Marty\", \n" +
+                            "                \"breed\": \"whippet\", \n" +
+                            "                \"count\": 1, \n" +
+                            "                \"twoFeet\": false\n" +
+                            "            }\n" +
+                            "        ], \n" +
+                            "        \"cat\": {\n" +
+                            "            \"name\": \"Matilda\"\n" +
+                            "        }\n" +
+                            "    }\n" +
+                            "}";
+                        $(function () {
+                            $("#json_content").val(default_json);
+                        })
+                    </script>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <!--内容块开始-->
+                            <ul class="new_tools_list">
+                                <li>填写JSON内容，生成Javabean的类名、包名即可<span class="green">自动生成JavaBean代码，并直接打包下载</span>。</li>
+                            </ul>
+                            <div class='divider'></div>
+                            <textarea placeholder="贴入要生成Pojo的Json代码" id="json_content" onchange="gen();" onkeyup="gen();"></textarea>
+                            <form action="" id="result-list" method="get">
+                                <div class='row'>
+                                    <span class='span strong'>&nbsp;RootClass：</span>
+                                    <div class='span two xs-six'>
+                                        <input type="text" class="input-text" id="class_name" placeholder="root json类名" value="JsonRootBean"/>
+                                    </div>
+                                    <span class='span strong'>&nbsp;Package：</span>
+                                    <div class='span three xs-six'>
+                                        <input type="text" class="input-text" id="package_name" placeholder="包名根路径" value="com.example.pojo"/>
+                                    </div>
+                                    <span class='span strong'>&nbsp;Author：</span>
+                                    <div class='span three xs-six'>
+                                        <input type="text" class="input-text" id="author" placeholder="作者"/>
+                                    </div>
+                                    <button class='button primary small' onclick="gen();" type="button">生成JavaBean
+                                    </button>
+                                    <button style="display: none;" class='button success small' id="download_btn" onclick="download_zip();"
+                                            type="button">下载代码
+                                    </button>
+                                </div>
+                                <div>
+                                    <div class="alert success" id="resule_text"></div>
+                                </div>
+                                <div id="genDiv"></div>
+                            </form>
+                            <script src="static/bejson/json2javapojo/jsonlint.js"></script>
+                            <script src="static/bejson/json2javapojo/java2pojotools2.js" type="text/javascript"
+                                    charset="utf-8"></script>
+                            <script src="static/bejson/json2javapojo/jszip.min.js"></script>
+                            <script src="static/bejson/json2javapojo/FileSaver.js"></script>
+
+                            <div class='divider'></div>
+                            <!--内容块结束-->
+                        </div>
+                        <div class="panel-footer"></div>
+                    </div>
+                    <!-- content ed -->
+                    <script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="static/js/bejsoncommon.js?v=20170711"></script>
+</body>
+</html>

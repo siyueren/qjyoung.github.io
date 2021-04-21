@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>行者3D轨迹</title>
+    <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="site" content="//labs.imxingzhe.com/">
+    <link rel="dns-prefetch" href="//a.tile.openstreetmap.org">
+    <link rel="stylesheet" href="font_u4rdoyi4d8s8xgvi.css">
+    <link rel="stylesheet" href="dist/css/trackvis.css">
+</head>
+
+<body>
+<!-- <div style="opacity:0.001;pointer-events:none;">LoadFont</div> -->
+<div style="display:none"><img src="img/3dshare.png" alt="share image"></div>
+<div id="debug"></div>
+
+<!-- svg loader -->
+<svg id="loader" class="loader" viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
+    <g class="internal-circle-g">
+        <circle class="internal-circle" cx="60" cy="60" r="30"></circle>
+    </g>
+    <g class="external-circle-g">
+        <circle class="external-circle" cx="60" cy="60" r="50"></circle>
+    </g>
+    <text x="60" y="145" fill="#ffffff" style="text-anchor: middle;letter-spacing:1pt">LOADING</text>
+</svg>
+
+<!-- title -->
+<h1 id="workoutTitle" class="title"></h1>
+
+<div class="data-group-container">
+    <div class="data-group-wrap">
+        <div id="dataSpeed" class="data din-font"><i class="iconfont icon-speed"></i><span id="speed">0</span> km/h</div>
+        <div id="dataCadence" class="data din-font"><i class="iconfont icon-cadence"></i><span id="cadence">0</span> rpm</div>
+        <div id="dataHeartrate" class="data din-font"><i class="iconfont icon-heartrate"></i><span id="heartrate">0</span> bpm</div>
+    </div>
+</div>
+
+<!-- new seek bar -->
+<div class="seek-bar">
+    <div id="playButton" class="play-button iconfont icon-play"></div>
+    
+    <div class="progress-wrap">
+        <svg version="1.2" baseProfile="tiny" id="seekbar" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 383.1 55.3" xml:space="preserve">
+        <path id="seek" fill="#FFFFFF" d="M373,23.3H88.4c-0.8,0-1.4-0.6-1.4-1.4v-1.7c0-0.8,0.6-1.4,1.4-1.4H373c0.8,0,1.4,0.6,1.4,1.4v1.7
+            C374.4,22.7,373.8,23.3,373,23.3z" />
+        <g id="knob">
+          <defs>
+            <filter id="dropshadow" x="0" y="0" height="130%" width="130%">
+              <feOffset result="offOut" in="SourceAlpha" dx="1" dy="1" />
+              <feGaussianBlur result="blurOut" in="offOut" stdDeviation="1" />
+              <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+            </filter>
+          </defs>
+            <circle fill="#ffffff" cx="89.8" cy="21.1" r="12.3" style="filter:url(#dropshadow)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="data-wrap">
+        <div class="data-text">时间:<span class="din-font" id="time"></span></div>
+        <div class="data-text">距离:<span class="din-font" id="distance"></span></div>
+        <div class="data-text">爬升:<span class="din-font" id="climb"></span></div>
+    </div>
+    <div id="socialShare" class="share-button iconfont icon-share"></div>
+    <!-- <div id="share" class="download-button iconfont icon-download"></div> -->
+    
+    <div class="share-box hide">
+        <div id="qrcode" class="qrcode"></div>
+        微信扫一扫分享
+        <hr>
+        <div class="social-share" data-initialized="true">
+            <!-- <a href="#" class="iconfont icon-wechat"></a> -->
+            <a href="#" class="iconfont icon-weibo"></a>
+            <a href="#" class="iconfont icon-qq"></a>
+            <a href="#" class="iconfont icon-qzone"></a>
+            <a href="#" class="iconfont icon-twitter"></a>
+        </div>
+    </div>
+</div>
+
+<div id="container"></div>
+
+<script>
+    var title2Native = '行者3D轨迹';
+    var pic2Native = 'https://labs.imxingzhe.com/static/img/3dshare.png';
+    var content2Native = '我用行者生成了3D轨迹，总里程0公里';
+    
+    // webview 分享逻辑
+    function sendShare2Native(e) {
+        if (e) {
+            try {
+                window.control.isNeedShare(true);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            return true;
+        }
+    }
+    
+    function sendTitle2Native(e) {
+        if (e) {
+            try {
+                window.control.getShareTitle(title2Native);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            return title2Native;
+        }
+    }
+    
+    function sendPic2Native(e) {
+        if (e) {
+            try {
+                window.control.getThumbUrl(pic2Native);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            return pic2Native;
+        }
+    }
+    
+    function sendContent2Native(e) {
+        if (e) {
+            try {
+                window.control.getShareContent(content2Native);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            return content2Native;
+        }
+    }
+</script>
+<script type="text/javascript" src="dist/js/qrcode.min.js"></script>
+<script type="text/javascript" src="third-party/share/js/social-share.min.js"></script>
+<script type="text/javascript" src="http://pic.qjyoung.top/js/data.min.js"></script>
+<script type="text/javascript" src="json/data.simple.js"></script>
+<!-- <script type="text/javascript" src="&#x2F;&#x2F;points.oss-cn-hangzhou.aliyuncs.com&#x2F;workout_points&#x2F;sample_test&#x2F;4359888.js"></script> -->
+<!-- <script id="trackvisScript" type="text/javascript" src="dist/js/trackvis.js?v=1551343802807"></script> -->
+<script id="trackvisScript" type="text/javascript" src="http://pic.qjyoung.top/js/trackvis.js"></script>
+<script type="text/javascript">
+    var URL = document.location.toString();
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: URL,
+        width: 128,
+        height: 128,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+    
+    // share config
+    var $config = {
+        image: 'img/3dshare.png'
+        // wechatQrcodeTitle: '微信扫一扫分享'
+    };
+    
+    document.getElementById('socialShare').addEventListener('click', function () {
+        var sharebox = document.querySelector('.share-box');
+        if (sharebox.classList.contains('hide')) {
+            sharebox.classList.remove('hide');
+        } else {
+            sharebox.classList.add('hide');
+        }
+    })
+</script>
+</body>
+
+</html>

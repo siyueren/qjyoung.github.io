@@ -1,0 +1,167 @@
+<html lang="en">​
+​
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tools-board</title>
+    <style>
+        a:link {color: blue}
+        a:visited {color: blue}
+        a:hover {color: blue;text-decoration:underline;}
+        a:active {color: blue}
+        a{ text-decoration: none;}
+</style>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    
+</head>
+<body>
+<div id="app" style="width:100%;height: 100%;">
+    <tools-board v-bind:tool_groups="toolGroups"></tools-board>
+</div>
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        components: {
+            toolsBoard: {
+                props: ['tool_groups'],
+                template: '<div>\
+                                <div style="float:left;padding: 5px 17px 5px 17px;margin: 5px 17px 5px 17px" :style="{\'background-color\':group.background}" v-for="group in tool_groups">\
+                                    <h1>{{group.title}}</h1>\
+                                    <ol>\
+                                        <template v-for="tool in group.tools">\
+                                            <li><a :href="tool.url" target="_blank">{{tool.name}}</a></li>\
+                                        </template>\
+                                    </ol>\
+                                </div>\
+                            </div>'
+            }
+        },
+        data: {
+            toolGroups: [
+                {
+                    title: "siyueren",
+                    background: "pink",
+                    tools: [
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: '', name: ''},
+                        {url: 'https://v.qq.com/x/page/n0536o6npn5.html', name: '一个人踩着单车去拉萨'},
+                        {url: '', name: ''},
+                        {url: 'https://mp.weixin.qq.com/s/HARgAEd3G36cMgioiwA04A', name: '西藏，魂归之地'},
+                        {url: 'https://mp.weixin.qq.com/s/X1R4ozZ_QmZZHa_2kCt0KA', name: '受宠若惊，竟被DDoS攻击了'},
+                        {url: 'https://mp.weixin.qq.com/s/gttv67UBfCn-JapSfzHMlA', name: '商城下单-三方支付-时序图'},
+                        {url: 'https://mp.weixin.qq.com/s/ZlK9vPLLkNFP73TPDrth5A', name: '借助lambda灵活控制事物粒度'},
+                        {url: 'https://mp.weixin.qq.com/s/nbzWbws4o53tO42WZMFynA', name: '注解、代理简化redis分布式锁-实现代码'},
+                        {url: 'https://mp.weixin.qq.com/s/ycdvhfzIP6Y_CpskCyrQmQ', name: '通用的区块链智能合约web3.go调用服务'},
+                        {url: 'https://mp.weixin.qq.com/s/KJv8m_1exKeMEU__pGR4Ug', name: 'docker快速搭建elk-2-解析Java、go、nginx日志，让你的日志从一潭死水变成生机勃勃的海洋'},
+                        {url: 'https://mp.weixin.qq.com/s/hoOZqeHwkvwWyP8BhCKP7Q', name: 'Git 多人协作，诸葛亮带你玩转cherry-pick 、rebase'},
+                        {url: 'https://mp.weixin.qq.com/s/ZrDaT1kMT30EDqBLi28lUA', name: '精简版-五颜六色的常用工具面板-基于Vue'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247484055&idx=1&sn=64a917a0c9b348afb0ca706fe6ab072c&chksm=fd7457d7ca03dec170e67bf02b6d61e69ea3d9bf2b1895fc4a4b0cb07872f56cbdc1ead25248&token=163759059&lang=zh_CN#rd', name: 'SQL查看数据 - 借助view、group_concat节省你宝贵时间'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247484019&idx=1&sn=ee5dfc27cd17e3101333541214a1f54e&chksm=fd745733ca03de2571d39cc62570133bc627348c690cb5918a64fe5dfd7f2e86b51bcf035786&token=163759059&lang=zh_CN#rd', name: '用VUE做一个常用工具面板'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483993&idx=1&sn=255ffdd3ca9a512389c71f8f53d9f47c&chksm=fd745719ca03de0f33d1e90756ba21789bb7a43264cb010f67966ba4927a3872be18989a2f19&token=163759059&lang=zh_CN#rd', name: '被工具（Goland）坑的最惨的一次'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483983&idx=1&sn=b3d17e1eddb04ffc57bc9fa5281c8089&chksm=fd74570fca03de190cf8aaf554e5a9c4a800748013fd8a18cc03698c017512c336c19052a414&token=163759059&lang=zh_CN#rd', name: '做一个会偷懒的程序员'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483956&idx=1&sn=5dd53e318dee8601164e2854018572e6&chksm=fd745774ca03de6274a2bb4badf790bf45eed33508943e738ea8751de3fd7553532d71e4b16f&token=163759059&lang=zh_CN#rd', name: 'idea定制groovy脚本，导出db数据到csv自动加行号和标题'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483937&idx=1&sn=4d719be147d43eda2cb222e6a622a637&chksm=fd745761ca03de77cbf817ee04b2b09163b76927ac30793f8626243d50ad433adaeff89439db&token=163759059&lang=zh_CN#rd', name: '60行shell脚本快速生成Java项目脚手架'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483912&idx=1&sn=dc0f0ec6bcd4adb6b6e4213083ea668b&chksm=fd745748ca03de5ea821a4b07ec86b785e92826b2a736c85018576f07d19550374a171eddb33&token=163759059&lang=zh_CN#rd', name: '用docker快速搭建elk日志平台'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483892&idx=1&sn=efed3a27637dfb66fd13e41966669919&chksm=fd7454b4ca03dda2e22c60d6073535c6e24ce7c3ed3adc59c658302137e521ae03a8a09493fb&token=163759059&lang=zh_CN#rd', name: '50行go实现tree命令'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483883&idx=1&sn=79fedccc36d9d438a103b162f6b4aeb2&chksm=fd7454abca03ddbd4712a9eccc6f8ab1b9c5cfabdf35439594b252588bf4f29a2ca67308b533&token=163759059&lang=zh_CN#rd', name: '错怪Mybatis, 原来这并不是bug'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483863&idx=1&sn=855b9e8289fb48b46fe97823be14a0c9&chksm=fd745497ca03dd8113f2aaa6fcebba931a92b8bf08048b720c54fc805ea3897bafd3e2809ae5&token=163759059&lang=zh_CN#rd', name: '注解+代理 加持分布式锁，让代码更简洁'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483834&idx=1&sn=163e85fe1e2483091170e7ced018bfa4&chksm=fd7454faca03ddec72863594874faf7c3a5b90a9f9b312a9be8ee3c286421da739551e149e4b&token=163759059&lang=zh_CN#rd', name: 'DIY插件，自动生成set调用，解放双手'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483807&idx=1&sn=a7b684b1635008a7dd1692a11e7be5bd&chksm=fd7454dfca03ddc9e1cbc723f7c46c8653e31862a1a878abb8af7d24ecb4af7d6041a7aeaa53&token=163759059&lang=zh_CN#rd', name: 'Java回调、Lambda与Redis分布式锁新玩法'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483766&idx=1&sn=a43aa6de6d9942bf4764b931767fa639&chksm=fd745436ca03dd2032c51d4d6d571ba407f73f026f0c39b51ca582117c322fd9352b060cceac&token=163759059&lang=zh_CN#rd', name: '巨烧脑-估计没几人能看懂:实现tree命令 - 探索你D盘的秘密'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483737&idx=1&sn=9c742571e6f74ad099b09b3c784bf1c3&chksm=fd745419ca03dd0fc1bdcd802991022d09a6795bc5e8487cd34551722f3b7a99bf6f0ab43ef3&token=163759059&lang=zh_CN#rd', name: '基于shiro的权限自动录入'},
+                        {url: '', name: ''},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483704&idx=1&sn=b84bd5e2bec00b0111c9536e87475aec&chksm=fd745478ca03dd6ea8bc7b0d928fcbfaac0dffceba85ade5d9c970ba48cb3726e7a0de158085&token=163759059&lang=zh_CN#rd', name: '南天门上，三千忠魂奋孤勇；祭旗坡下，一腔热血照青山'},
+                        {url: '', name: ''},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247484021&idx=1&sn=1852fced623232cf929caa3bf7363d8e&chksm=fd745735ca03de23c664fe8c8a38548694d2282345585ff6817a87a1af51034a37f288363261&token=163759059&lang=zh_CN#rd', name: '2020年5月，比特币即将迎来第三次减半，为什么比特币会减半'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483723&idx=1&sn=53e4b0d400a3fbb2ddfb612f1638a88d&chksm=fd74540bca03dd1db99857a8ef9791588af5a62d93624eab6ec589d049c47d2212c9171b4972&token=163759059&lang=zh_CN#rd', name: '不小心敲了 rm -rf / 后反应是怎样的？'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483717&idx=1&sn=4044aa2abbd160af4164b233c494a902&chksm=fd745405ca03dd13e05252a5e185a43bbec217aca1a34271dcaa5e813b3b516fbafbc7a9bfb5&token=163759059&lang=zh_CN#rd', name: '星际穿越的完全解析'},
+                        {url: 'https://mp.weixin.qq.com/s?__biz=MzU3ODQ1NDU3NQ==&mid=2247483684&idx=1&sn=7ed454eccbfebe1dd22001f6d085873c&chksm=fd745464ca03dd728da8e924dea796d27276676a15a47d0a0fe4177b3551dc71fda241b608db&token=163759059&lang=zh_CN#rd', name: '奇记｜生死荒原路，52天首次单人完整横穿大羌塘'},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: '', name: ''},
+                        {url: 'https://github.com/qjyoung', name: 'github'},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                    ]
+                },
+                {
+                    title: "docs_chain",
+                    background: "yellow",
+                    tools: [
+                        {url: 'https://eth.btc.com/', name: 'eth-browser'},
+                        {url: 'https://blockchain.info/', name: 'btc-browser'},
+                        {url: '', name: ''},
+                        {url: '', name: 'hoo'},
+                        {url: 'https://hoo.com/trade/btc-usdt', name: 'btc'},
+                        {url: 'https://hoo.com/trade/eth-usdt', name: 'eth'},
+                        {url: '', name: ''},
+                        {url: 'https://www.huobi.me/en-us/markets/', name: 'huobi-home'},
+                        {url: 'https://www.huobi.me/en-us/exchange/btc_usdt/', name: 'btc_usdt'},
+                        {url: 'https://www.huobi.me/en-us/exchange/eth_usdt/', name: 'eth_usdt'},
+                        {url: '', name: ''},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                    ]
+                },
+                {
+                    title: "docs",
+                    background: "cyan",
+                    tools: [
+                        {url: 'http://tools.qjyoung.top/format/index.htm', name: 'Json格式化'},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                    ]
+                },
+                {
+                    title: "jenkins",
+                    background: "limegreen",
+                    tools: [
+                        {url: 'https://www.bootcdn.cn/', name: '前端开源项目 CDN '},
+                        {url: 'http://tools.qjyoung.top/encrypt/encrypt2.html', name: '哈希散列'},
+                        {url: 'http://tools.qjyoung.top/json2bean/index.html', name: 'json 2 bean'},
+                        {url: 'http://www.jq22.com/textDifference', name: 'show diff'},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: 'https://blog.siyueren.com', name: 'siyueren.com'},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                        {url: '', name: ''},
+                    ]
+                }]
+        }
+    });
+</script>
+</html>
